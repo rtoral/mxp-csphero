@@ -12,6 +12,20 @@ services:
       - DB_NAME=csphero_production
       - DB_USERNAME=myusername
       - DB_PASSWORD=replace_with_your_password
+      # Public URL used in confirmation / password-reset email links.
+      - APP_HOST=csphero.example.com
+      - APP_PROTOCOL=https
+      # SMTP — works with any provider (Mailgun, Postmark, SES, plain SMTP, ...).
+      # Example below is Mailgun (US); for EU use smtp.eu.mailgun.org.
+      # Leave SMTP_ADDRESS unset/empty to disable outbound email entirely.
+      - SMTP_ADDRESS=smtp.mailgun.org
+      - SMTP_PORT=587
+      - SMTP_DOMAIN=csphero.example.com
+      - SMTP_USERNAME=postmaster@csphero.example.com
+      - SMTP_PASSWORD=replace_with_your_smtp_password
+      - SMTP_AUTHENTICATION=plain
+      - SMTP_STARTTLS_AUTO=true
+      - MAILER_SENDER=CSP Hero <no-reply@csphero.example.com>
     ports:
       - "80:80"
 

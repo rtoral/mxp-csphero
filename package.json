@@ -2,6 +2,7 @@
   "name": "app",
   "private": "true",
   "dependencies": {
+    "@emotion/styled": "^11.14.1",
     "@mui/icons-material": "^5.14.14",
     "chart.js": "^4.4.0",
     "date-fns": "^2.30.0",

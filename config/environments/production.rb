@@ -56,18 +56,27 @@ Rails.application.configure do
   # Set this to true and configure the email server for immediate delivery to raise delivery errors.
   # config.action_mailer.raise_delivery_errors = false
 
-  # Set host to be used by links generated in mailer templates.
-  config.action_mailer.default_url_options = { host: "example.com" }
-
-  config.action_mailer.delivery_method = :smtp
-  config.action_mailer.smtp_settings = {
-    authentication: :plain,
-    enable_starttls_auto: true
-  }
+  # Mailer host — used to build links in confirmation / password reset emails.
   config.action_mailer.default_url_options = {
-    protocol: "https",
-    host: "<yourdomain>",
+    protocol: ENV.fetch("APP_PROTOCOL", "https"),
+    host: ENV.fetch("APP_HOST", "localhost"),
   }
+
+  # SMTP delivery is configured entirely from ENV so any provider (Mailgun,
+  # Postmark, SES, self-hosted, etc.) can be plugged in without code changes.
+  # If SMTP_ADDRESS is not set, mail delivery is disabled.
+  if ENV["SMTP_ADDRESS"].present?
+    config.action_mailer.delivery_method = :smtp
+    config.action_mailer.smtp_settings = {
+      address: ENV["SMTP_ADDRESS"],
+      port: ENV.fetch("SMTP_PORT", 587).to_i,
+      domain: ENV["SMTP_DOMAIN"].presence || ENV["APP_HOST"],
+      user_name: ENV["SMTP_USERNAME"],
+      password: ENV["SMTP_PASSWORD"],
+      authentication: ENV.fetch("SMTP_AUTHENTICATION", "plain").to_sym,
+      enable_starttls_auto: ENV.fetch("SMTP_STARTTLS_AUTO", "true") == "true",
+    }
+  end
 
   # Enable locale fallbacks for I18n (makes lookups for any locale fall back to
   # the I18n.default_locale when a translation cannot be found).

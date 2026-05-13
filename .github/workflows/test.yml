@@ -1,5 +1,7 @@
 name: Test ruby and javascript code
-on: [push]
+on:
+  push:
+  workflow_call:
 
 jobs:
   test:

@@ -1,5 +1,5 @@
-import * as React from "react";
-import { useState, FC, useRef, useEffect } from "react";
+import { useState, useRef, useEffect } from "react";
+import type { FC } from "react";
 
 interface Option {
   label: string;

@@ -1,6 +1,6 @@
 import * as React from "react";
 import { formatDate, source } from "./utils";
-import { Report } from "./models";
+import type { Report } from "./models";
 import DataObjectIcon from "@mui/icons-material/DataObject";
 
 const ReportDetails: React.FC<{ report: Report }> = ({ report }) => {

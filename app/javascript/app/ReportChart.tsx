@@ -1,7 +1,7 @@
 import BarChartOutlinedIcon from "@mui/icons-material/BarChartOutlined";
 import Chart from "chart.js/auto";
 import * as React from "react";
-import { ReportTimeAgg } from "./models";
+import type { ReportTimeAgg } from "./models";
 
 const ReportChart: React.FC<{
   timeSeries: ReportTimeAgg[];

@@ -1,5 +1,5 @@
 import { formatDistance } from "date-fns";
-import { Report } from "./models";
+import type { Report } from "./models";
 
 export function source(report: Report) {
   return [report.source_file, report.line_number, report.column_number]

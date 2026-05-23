@@ -6,7 +6,7 @@ import AggReports from "./AggReports";
 import AllReports from "./AllReports";
 import Sidebar from "./Sidebar";
 import Api from "./api";
-import { User, Website } from "./models";
+import type { User, Website } from "./models";
 import AddWebsitePage from "./pages/AddWebsitePage";
 import DomainEditPage from "./pages/DomainEditPage";
 import DomainPage from "./pages/DomainPage";

@@ -1,5 +1,5 @@
 import { Link, NavLink, useLocation } from "react-router-dom";
-import { Website } from "./models";
+import type { Website } from "./models";
 import * as React from "react";
 import Dropdown from "./components/Dropdown";
 

@@ -3,7 +3,7 @@ import * as React from "react";
 // clock from mui icons
 import ClockIcon from "@mui/icons-material/AccessTime";
 
-import { Range } from "./useFilters";
+import type { Range } from "./useFilters";
 import Dropdown from "./components/Dropdown";
 
 const TimeRangeFilter: React.FC<{

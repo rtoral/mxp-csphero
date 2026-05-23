@@ -1,8 +1,7 @@
-import * as React from "react";
 import { useEffect, useState } from "react";
 import { Outlet, useParams } from "react-router-dom";
 import Api from "../api";
-import { Website } from "../models";
+import type { Website } from "../models";
 
 const DomainPage = () => {
   const [website, setWebsite] = useState<Website | null>(null);

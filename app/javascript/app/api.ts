@@ -1,4 +1,4 @@
-import { AggReport, Report, ReportTimeAgg, User, Website } from "./models";
+import type { AggReport, Report, ReportTimeAgg, User, Website } from "./models";
 
 export default {
   reports: {

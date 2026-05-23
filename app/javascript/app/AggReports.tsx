@@ -4,9 +4,10 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
 import Api from "./api";
-import { AggReport } from "./models";
+import type { AggReport } from "./models";
 import Spinner from "./Spinner";
-import Table, { Column } from "./Table";
+import Table from "./Table";
+import type { Column } from "./Table";
 import TimeRangeFilter from "./TimeRangeFilter";
 import useFilters from "./useFilters";
 

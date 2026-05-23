@@ -1,6 +1,6 @@
 import * as React from "react";
 import { Link } from "react-router-dom";
-import { Website } from "../models";
+import type { Website } from "../models";
 import PlusIcon from "@mui/icons-material/Add";
 
 const HomePage: React.FC<{ websites: Website[] }> = ({ websites }) => {

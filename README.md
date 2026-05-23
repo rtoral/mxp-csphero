@@ -1,5 +1,11 @@
 # CSP Hero
 
+[![Tests](https://github.com/odosui/csphero/actions/workflows/test.yml/badge.svg)](https://github.com/odosui/csphero/actions/workflows/test.yml)
+[![Build and push Docker image](https://github.com/odosui/csphero/actions/workflows/docker.yml/badge.svg)](https://github.com/odosui/csphero/actions/workflows/docker.yml)
+[![Docker Hub](https://img.shields.io/docker/pulls/hiquest/csphero?logo=docker)](https://hub.docker.com/r/hiquest/csphero)
+[![Docker image size](https://img.shields.io/docker/image-size/hiquest/csphero/latest?logo=docker)](https://hub.docker.com/r/hiquest/csphero)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+
 CSP Hero is a **free**, **open-source** server and dashboard designed to help developers collect and analyze [Content Security Policy (CSP)](https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/CSP) reports.
 
 > The easiest way to try CSP Hero is in [our cloud service](https://www.csphero.com/).

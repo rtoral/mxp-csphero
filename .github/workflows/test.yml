@@ -27,7 +27,7 @@ jobs:
 
     - uses: ruby/setup-ruby@v1
       with:
-        ruby-version: 3.3.0
+        ruby-version: .ruby-version
         bundler-cache: true # runs 'bundle install' and caches installed gems automatically
 
     - name: Setup Node

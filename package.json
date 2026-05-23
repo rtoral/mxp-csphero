@@ -3,9 +3,9 @@
   "private": "true",
   "dependencies": {
     "@emotion/styled": "^11.14.1",
-    "@mui/icons-material": "^5.14.14",
+    "@mui/icons-material": "^9.0.1",
     "chart.js": "^4.4.0",
-    "date-fns": "^2.30.0",
+    "date-fns": "^4.3.0",
     "motion": "^12.4.5",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
@@ -14,12 +14,11 @@
   "devDependencies": {
     "@types/react": "^18.2.7",
     "@types/react-dom": "^18.2.4",
-    "@vitejs/plugin-react": "^4.3.4",
-    "esbuild": "^0.19.5",
-    "esbuild-sass-plugin": "^2.16.0",
-    "typescript": "^5.8.3",
-    "vite": "^5.4.14",
-    "vite-plugin-ruby": "^5.1.1"
+    "@vitejs/plugin-react": "^6.0.2",
+    "sass-embedded": "^1.100.0",
+    "typescript": "^6.0.3",
+    "vite": "^8.0.14",
+    "vite-plugin-ruby": "^5.2.2"
   },
   "scripts": {
     "check-types-watch": "tsc --project tsconfig.json --noEmit --preserveWatchOutput --watch",

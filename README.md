@@ -30,6 +30,8 @@ Have a look at the [docker-compose example](docker-compose.yml) to quickly start
 docker compose up -d
 ```
 
+On startup a one-shot `migrate` service runs the database migrations once, and the `web` and `worker` services only start after it completes. This keeps deploys safe when running more than one app container against the same database — migrations never race per-pod. In Kubernetes, run the same `bin/rails db:prepare` step as an init container or a pre-deploy Job before starting the app pods.
+
 Make sure to set the `SECRET_KEY_BASE` environment variable to a secure random value, as it is used to sign session cookies.
 
 Also, since we need a postgresql database, you need to set the `DB_HOST`, `DB_PORT`, `DB_USER`, `DB_PASSWORD`, and `DB_NAME` environment variables to connect to your database.

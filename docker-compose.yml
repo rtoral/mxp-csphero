@@ -1,5 +1,3 @@
-version: '3'
-
 # Shared app configuration used by both the web and worker containers.
 # They run the same image and need identical env (DB creds, secrets, SMTP).
 x-app-env: &app-env
@@ -27,6 +25,19 @@ x-app-env: &app-env
   MAILER_SENDER: CSP Hero <no-reply@csphero.example.com>
 
 services:
+  # One-shot migration step. Runs db:prepare exactly once per `up`/deploy, then
+  # exits. web and worker wait for it to complete successfully before starting,
+  # so multiple app pods never race to migrate the same database. In Kubernetes
+  # this maps to an init container or a pre-deploy Job.
+  migrate:
+    image: "hiquest/csphero:latest"
+    command: ["./bin/rails", "db:prepare"]
+    environment:
+      <<: *app-env
+    depends_on:
+      - db
+    restart: on-failure
+
   web:
     image: "hiquest/csphero:latest"
     environment:
@@ -34,7 +45,10 @@ services:
     ports:
       - "80:80"
     depends_on:
-      - db
+      db:
+        condition: service_started
+      migrate:
+        condition: service_completed_successfully
     restart: unless-stopped
 
   # Solid Queue worker: parses incoming CSP reports asynchronously so the web
@@ -47,8 +61,10 @@ services:
     environment:
       <<: *app-env
     depends_on:
-      - db
-      - web
+      db:
+        condition: service_started
+      migrate:
+        condition: service_completed_successfully
     restart: unless-stopped
 
   db:

@@ -6,9 +6,10 @@ if [ -z "${LD_PRELOAD+x}" ]; then
     export LD_PRELOAD
 fi
 
-# If running the rails server then create or migrate existing database
-if [ "${@: -2:1}" == "./bin/rails" ] && [ "${@: -1:1}" == "server" ]; then
-  ./bin/rails db:prepare
-fi
+# NOTE: migrations are intentionally NOT run here. When several web/worker pods
+# share one database, running db:prepare per-pod races on every deploy. Run
+# migrations exactly once per release via the dedicated `migrate` service
+# (docker compose) or an init container / Job (Kubernetes) before starting the
+# app pods. See docker-compose.yml.
 
 exec "${@}"

@@ -11,13 +11,14 @@ class ReportsController < ApplicationController
     raw_headers = request.headers.env.select { |k, _v| k.start_with?('HTTP_') }
     raw_json_body = request.body.read
 
+    # store raw data, and defer the processing
     report = website.reports.create!(
       raw_headers: raw_headers,
       raw_body: raw_json_body
     )
 
-    report.parse!
+    ProcessReportJob.perform_later(report.id)
 
-    render json: { message: 'Report created' }, status: :created
+    render json: { message: 'Report accepted' }, status: :accepted
   end
 end

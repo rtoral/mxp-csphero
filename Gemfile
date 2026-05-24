@@ -5,6 +5,9 @@ gem "propshaft"
 gem 'thruster'
 gem "pg", "~> 1.1"
 gem "puma", ">= 5.0"
+
+# background job processing (async report ingest)
+gem "solid_queue", "~> 1.1"
 gem "importmap-rails"
 
 # integrates with vite

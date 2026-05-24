@@ -1,33 +1,55 @@
 version: '3'
 
+# Shared app configuration used by both the web and worker containers.
+# They run the same image and need identical env (DB creds, secrets, SMTP).
+x-app-env: &app-env
+  RAILS_ENV: production
+  NODE_ENV: production
+  SECRET_KEY_BASE: your_secret_key_base_here
+  DB_HOST: db
+  DB_PORT: 5432
+  DB_NAME: csphero_production
+  DB_USERNAME: myusername
+  DB_PASSWORD: replace_with_your_password
+  # Public URL used in confirmation / password-reset email links.
+  APP_HOST: csphero.example.com
+  APP_PROTOCOL: https
+  # SMTP — works with any provider (Mailgun, Postmark, SES, plain SMTP, ...).
+  # Example below is Mailgun (US); for EU use smtp.eu.mailgun.org.
+  # Leave SMTP_ADDRESS unset/empty to disable outbound email entirely.
+  SMTP_ADDRESS: smtp.mailgun.org
+  SMTP_PORT: 587
+  SMTP_DOMAIN: csphero.example.com
+  SMTP_USERNAME: postmaster@csphero.example.com
+  SMTP_PASSWORD: replace_with_your_smtp_password
+  SMTP_AUTHENTICATION: plain
+  SMTP_STARTTLS_AUTO: true
+  MAILER_SENDER: CSP Hero <no-reply@csphero.example.com>
+
 services:
   web:
     image: "hiquest/csphero:latest"
     environment:
-      - RAILS_ENV=production
-      - NODE_ENV=production
-      - SECRET_KEY_BASE=your_secret_key_base_here
-      - DB_HOST=db
-      - DB_PORT=5432
-      - DB_NAME=csphero_production
-      - DB_USERNAME=myusername
-      - DB_PASSWORD=replace_with_your_password
-      # Public URL used in confirmation / password-reset email links.
-      - APP_HOST=csphero.example.com
-      - APP_PROTOCOL=https
-      # SMTP — works with any provider (Mailgun, Postmark, SES, plain SMTP, ...).
-      # Example below is Mailgun (US); for EU use smtp.eu.mailgun.org.
-      # Leave SMTP_ADDRESS unset/empty to disable outbound email entirely.
-      - SMTP_ADDRESS=smtp.mailgun.org
-      - SMTP_PORT=587
-      - SMTP_DOMAIN=csphero.example.com
-      - SMTP_USERNAME=postmaster@csphero.example.com
-      - SMTP_PASSWORD=replace_with_your_smtp_password
-      - SMTP_AUTHENTICATION=plain
-      - SMTP_STARTTLS_AUTO=true
-      - MAILER_SENDER=CSP Hero <no-reply@csphero.example.com>
+      <<: *app-env
     ports:
       - "80:80"
+    depends_on:
+      - db
+    restart: unless-stopped
+
+  # Solid Queue worker: parses incoming CSP reports asynchronously so the web
+  # tier can accept report beacons with a single cheap insert. Scale with
+  # `docker compose up --scale worker=N` and tune threads/processes per worker
+  # via JOB_CONCURRENCY (see config/queue.yml).
+  worker:
+    image: "hiquest/csphero:latest"
+    command: ["./bin/jobs"]
+    environment:
+      <<: *app-env
+    depends_on:
+      - db
+      - web
+    restart: unless-stopped
 
   db:
     image: postgres:15
@@ -37,6 +59,7 @@ services:
       - POSTGRES_PASSWORD=replace_with_your_password
     volumes:
       - db_data:/var/lib/postgresql/data
+    restart: unless-stopped
 
 volumes:
   db_data:

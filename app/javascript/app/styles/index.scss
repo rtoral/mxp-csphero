@@ -232,15 +232,20 @@ body {
 
   .filters {
     width: $unit10;
-    height: 100%;
-    margin: 0;
     flex-shrink: 0;
+    margin: $unit4 0 $unit4 $unit4;
     padding: $unit4 $unit3;
     background-color: #fff;
-    border-right: 1px solid var(--color-table-border);
+    border: 1px solid var(--color-table-border);
+    border-radius: $radius-lg;
+    box-shadow: var(--shadow-sm);
 
     .filter {
       margin-bottom: $unit4;
+
+      &:last-child {
+        margin-bottom: 0;
+      }
 
       &.checkbox {
         display: flex;
@@ -389,6 +394,7 @@ body {
     justify-content: center;
   }
 }
+
 
 .disposition-badge {
   display: inline-block;

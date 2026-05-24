@@ -122,9 +122,12 @@ $radius-xl: 16px;
   --gray-800: #1e293b;
   --gray-900: #0f172a;
 
-  --color-bg: var(--gray-50);
-  --color-bg-hover: var(--gray-100);
-  --color-bg-hover-intense: var(--gray-200);
+  /* Surface hierarchy: a deeper canvas lets white cards/tables lift off the
+     page; the "recessed" tones (header, hover, expanded) sit clearly below
+     white rather than blending into them. */
+  --color-bg: var(--gray-100);
+  --color-bg-hover: var(--gray-200);
+  --color-bg-hover-intense: var(--gray-300);
   --color-text: var(--gray-800);
 
   --color-primary: var(--primary-600);
@@ -134,8 +137,8 @@ $radius-xl: 16px;
   --color-error: var(--danger-500);
 
   --color-table-border: var(--gray-200);
-  --color-table-header: var(--gray-50);
-  --color-table-row-hover: var(--gray-50);
+  --color-table-header: var(--gray-100);
+  --color-table-row-hover: var(--gray-100);
   --color-table-secondary: var(--gray-100);
   --color-filters-secondary: var(--gray-600);
 

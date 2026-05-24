@@ -1,3 +1,5 @@
+require "ostruct"
+
 class AggregatedReport
 
   attr_accessor :params, :count, :latest_reported_at

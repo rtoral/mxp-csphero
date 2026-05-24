@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_05_24_154758) do
+ActiveRecord::Schema[8.1].define(version: 2026_05_24_160210) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -52,7 +52,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_05_24_154758) do
     t.index ["disposition"], name: "index_reports_on_disposition"
     t.index ["source_file"], name: "index_reports_on_source_file"
     t.index ["violated_directive"], name: "index_reports_on_violated_directive"
-    t.index ["website_id"], name: "index_reports_on_website_id"
+    t.index ["website_id", "created_at"], name: "index_reports_on_website_id_and_created_at"
   end
 
   create_table "solid_queue_blocked_executions", force: :cascade do |t|

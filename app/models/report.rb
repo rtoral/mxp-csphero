@@ -121,7 +121,7 @@ class Report < ApplicationRecord
   end
 
   def parse!
-    raw = JSON.parse(raw_body)["csp-report"]
+    raw = extract_violation(JSON.parse(raw_body))
     self.document_uri = raw["document-uri"]
     self.violated_directive = raw["violated-directive"]
 
@@ -139,6 +139,44 @@ class Report < ApplicationRecord
     self.referrer = raw["referrer"]
     self.source_file = raw["source-file"]
     self.save!
+  end
+
+  # Normalizes a parsed report body into the hyphenated keys used above.
+  #
+  # Two wire formats reach this endpoint:
+  #   * Legacy `report-uri`  -> {"csp-report": {"document-uri": ..., ...}}  (hyphenated keys)
+  #   * Modern `report-to` / Reporting API -> a JSON array of
+  #     {"type": "csp-violation", "body": {"documentURL": ..., ...}}        (camelCase keys)
+  #     (browsers batch into an array; we also accept a single bare object)
+  def extract_violation(parsed)
+    if parsed.is_a?(Array)
+      entry = parsed.find { |r| r.is_a?(Hash) && r["type"] == "csp-violation" } || parsed.first
+      reporting_api_body(entry)
+    elsif parsed.is_a?(Hash) && parsed.key?("csp-report")
+      parsed["csp-report"]
+    elsif parsed.is_a?(Hash) && parsed.key?("body")
+      reporting_api_body(parsed)
+    else
+      parsed
+    end
+  end
+
+  def reporting_api_body(entry)
+    body = (entry || {})["body"] || {}
+    {
+      "document-uri"        => body["documentURL"],
+      "referrer"            => body["referrer"],
+      "violated-directive"  => body["violatedDirective"] || body["effectiveDirective"],
+      "effective-directive" => body["effectiveDirective"],
+      "original-policy"     => body["originalPolicy"],
+      "disposition"         => body["disposition"],
+      "blocked-uri"         => body["blockedURL"],
+      "line-number"         => body["lineNumber"],
+      "column-number"       => body["columnNumber"],
+      "status-code"         => body["statusCode"],
+      "script-sample"       => body["sample"],
+      "source-file"         => body["sourceFile"]
+    }
   end
 
   def go_json

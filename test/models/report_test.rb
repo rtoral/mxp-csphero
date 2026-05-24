@@ -50,6 +50,51 @@ class ReportTest < ActiveSupport::TestCase
     assert_equal "https://d38512d99udfkd.cloudfront.net/assets/app-118da6ed9af05a4fd3ad9cfc4dbc7a638aa2563cc9b05d8f928d606d93c97989.js", report.source_file
   end
 
+  test "parses a report-to (Reporting API) payload" do
+    raw_body = "[{\"age\":0,\"type\":\"csp-violation\",\"url\":\"https://www.candlapp.com/\",\"user_agent\":\"Mozilla/5.0\",\"body\":{\"documentURL\":\"https://www.candlapp.com/\",\"referrer\":\"https://referrer.example/\",\"violatedDirective\":\"script-src-elem\",\"effectiveDirective\":\"script-src-elem\",\"originalPolicy\":\"default-src 'self'; report-to csp-endpoint\",\"disposition\":\"report\",\"blockedURL\":\"https://evil.example/x.js\",\"lineNumber\":42,\"columnNumber\":7,\"statusCode\":200,\"sample\":\"\",\"sourceFile\":\"https://www.candlapp.com/app.js\"}}]"
+
+    c = Company.create!(name: "Candl")
+    ws = Website.create!(company: c, domain: "domain.org")
+
+    report = Report.create!(raw_body: raw_body, website: ws)
+    report.parse!
+    report.reload
+
+    assert_equal "https://www.candlapp.com/", report.document_uri
+    assert_equal "script-src-elem", report.violated_directive
+    assert_equal "script-src-elem", report.effective_directive
+    assert_equal "https://evil.example/x.js", report.blocked_uri
+    assert_equal 42, report.line_number
+    assert_equal 7, report.column_number
+    assert_equal 200, report.status_code
+    assert_equal "report", report.disposition
+    assert_equal "https://referrer.example/", report.referrer
+    assert_equal "https://www.candlapp.com/app.js", report.source_file
+  end
+
+  test "parses a bare Reporting API object (MDN example)" do
+    raw_body = "{\"age\":53531,\"body\":{\"blockedURL\":\"inline\",\"columnNumber\":39,\"disposition\":\"enforce\",\"documentURL\":\"https://example.com/csp-report\",\"effectiveDirective\":\"script-src-elem\",\"lineNumber\":121,\"originalPolicy\":\"default-src 'self'; report-to csp-endpoint-name\",\"referrer\":\"https://www.google.com/\",\"sample\":\"console.log(\\\"lo\\\")\",\"sourceFile\":\"https://example.com/csp-report\",\"statusCode\":200},\"type\":\"csp-violation\",\"url\":\"https://example.com/csp-report\",\"user_agent\":\"Mozilla/5.0\"}"
+
+    c = Company.create!(name: "Candl")
+    ws = Website.create!(company: c, domain: "domain.org")
+
+    report = Report.create!(raw_body: raw_body, website: ws)
+    report.parse!
+    report.reload
+
+    assert_equal "https://example.com/csp-report", report.document_uri
+    assert_equal "script-src-elem", report.violated_directive
+    assert_equal "script-src-elem", report.effective_directive
+    assert_equal "inline", report.blocked_uri
+    assert_equal 121, report.line_number
+    assert_equal 39, report.column_number
+    assert_equal 200, report.status_code
+    assert_equal "enforce", report.disposition
+    assert_equal "https://www.google.com/", report.referrer
+    assert_equal "console.log(\"lo\")", report.script_sample
+    assert_equal "https://example.com/csp-report", report.source_file
+  end
+
   test "filtering" do
     c = Company.create!(name: "Candl")
     ws = Website.create!(company: c, domain: "domain.org")

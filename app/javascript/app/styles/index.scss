@@ -440,14 +440,34 @@ body {
 
 .website-edit-page {
   background-color: var(--color-bg);
-  padding: $unit4 0;
+  padding: $unit5 0 $unit7;
   .container {
     max-width: $unit15;
     margin: 0 auto;
   }
 
+  .setup-header {
+    margin-bottom: $unit4;
+    h1 {
+      margin-bottom: $unit2;
+    }
+    p {
+      max-width: $unit14;
+      line-height: 1.6;
+    }
+  }
+
+  // inline `code` inside prose
+  p code {
+    background-color: var(--gray-100);
+    border: 1px solid var(--color-table-border);
+    padding: 1px $unit0;
+    border-radius: $radius-sm;
+    font-size: $text0;
+    color: var(--primary-700);
+  }
+
   .instructions-block {
-    margin-top: $unit3;
     background-color: #fff;
     padding: $unit4;
     border-radius: $radius-lg;
@@ -455,24 +475,108 @@ body {
     box-shadow: var(--shadow-sm);
   }
 
+  .endpoint-label {
+    display: block;
+    font-size: $text0;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--gray-500);
+    margin-bottom: $unit2;
+  }
+
+  .copy-field {
+    display: flex;
+    align-items: stretch;
+    gap: $unit2;
+    code {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      background-color: var(--gray-50);
+      border: 1px solid var(--color-table-border);
+      border-radius: $radius;
+      padding: $unit2 $unit3;
+      font-size: $text1;
+      color: var(--gray-800);
+      overflow-x: auto;
+      white-space: nowrap;
+    }
+  }
+
+  .copy-btn {
+    flex-shrink: 0;
+    align-self: stretch;
+    white-space: nowrap;
+    svg {
+      font-size: $text1;
+    }
+  }
+
   .i2 {
     margin-top: $unit5;
     h2 {
-      text-align: center;
+      display: flex;
+      align-items: center;
+      gap: $unit2;
+      font-size: $text4;
     }
     p {
-      margin-top: $unit3;
+      margin-top: $unit2;
+      margin-bottom: $unit3;
+      color: var(--gray-600);
+      line-height: 1.6;
     }
 
+    .directive {
+      font-family: "JetBrains Mono", ui-monospace, monospace;
+      font-size: $text2;
+      color: var(--primary-700);
+      font-weight: 500;
+    }
+
+    .step-badge {
+      display: inline-block;
+      font-size: $text0;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      padding: 2px $unit1;
+      border-radius: $unit5;
+      background-color: var(--primary-100);
+      color: var(--primary-700);
+      &.legacy {
+        background-color: var(--gray-200);
+        color: var(--gray-600);
+      }
+    }
+  }
+
+  .copy-block {
+    position: relative;
+    .copy-btn {
+      position: absolute;
+      top: $unit2;
+      right: $unit2;
+      z-index: 1;
+    }
     pre {
+      margin: 0;
       padding: $unit3;
-      color: var(--gray-700);
-      background-color: var(--gray-50);
+      padding-right: $unit8;
+      color: var(--gray-100);
+      background-color: var(--gray-900);
       border-radius: $radius;
-      border: 1px solid var(--color-table-border);
+      border: 1px solid var(--gray-800);
       overflow-x: auto;
       font-size: $text0;
-      line-height: 1.6;
+      line-height: 1.7;
+      code {
+        color: inherit;
+      }
+    }
+    .copy-btn svg {
+      font-size: $text1;
     }
   }
 }

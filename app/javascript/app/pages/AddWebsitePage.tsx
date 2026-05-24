@@ -2,7 +2,7 @@ import * as React from "react";
 import { useState } from "react";
 import Api from "../api";
 
-const AddWebsitePage: React.FC = () => {
+const AddWebsitePage: React.FC<{ welcome?: boolean }> = ({ welcome }) => {
   const [domain, setDomain] = useState<string>("");
   const [errors, setErrors] = useState<string[]>([]);
   const [creating, setCreating] = useState<boolean>(false);
@@ -27,7 +27,16 @@ const AddWebsitePage: React.FC = () => {
     <main className="add-website-page">
       <div className="container">
         <div className="website-form">
-          <h1>Add Website</h1>
+          {welcome ? (
+            <>
+              <h1>Get started</h1>
+              <p className="hint">
+                Let's add your first website to start collecting CSP reports.
+              </p>
+            </>
+          ) : (
+            <h1>Add Website</h1>
+          )}
           {errors.length > 0 && (
             <div className="errors">
               {errors.map((e) => (

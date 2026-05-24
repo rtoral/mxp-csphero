@@ -2,8 +2,13 @@ import * as React from "react";
 import { Link } from "react-router-dom";
 import type { Website } from "../models";
 import PlusIcon from "@mui/icons-material/Add";
+import AddWebsitePage from "./AddWebsitePage";
 
 const HomePage: React.FC<{ websites: Website[] }> = ({ websites }) => {
+  if (websites.length === 0) {
+    return <AddWebsitePage welcome />;
+  }
+
   return (
     <main className="home-page">
       <div className="container">

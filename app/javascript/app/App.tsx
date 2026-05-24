@@ -5,6 +5,7 @@ import { Route, HashRouter as Router, Routes } from "react-router-dom";
 import AggReports from "./AggReports";
 import AllReports from "./AllReports";
 import Sidebar from "./Sidebar";
+import Spinner from "./Spinner";
 import Api from "./api";
 import type { User, Website } from "./models";
 import AddWebsitePage from "./pages/AddWebsitePage";
@@ -28,6 +29,16 @@ const App: React.FC = () => {
   const websites = me?.companies.reduce((acc: Website[], c) => {
     return [...acc, ...c.websites];
   }, [] as Website[]);
+
+  if (me === null) {
+    return (
+      <div className="app">
+        <main>
+          <Spinner />
+        </main>
+      </div>
+    );
+  }
 
   return (
     <Router>

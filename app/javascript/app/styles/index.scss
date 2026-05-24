@@ -1,31 +1,8 @@
 @import "./reset.css";
 @import "./vars.scss";
+@import "./elements.scss";
 @import "./table.scss";
-
-* {
-  font-family: "Roboto", sans-serif;
-  color: var(--color-text);
-}
-
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  font-family: "Roboto Slab", serif;
-  font-weight: 400;
-}
-
-a {
-  color: var(--primary-500);
-  text-decoration: none;
-  transition: color 0.1s ease-in-out;
-  font-weight: 500;
-  &:hover {
-    color: var(--primary-700);
-  }
-}
+@import "./spinner.scss";
 
 body {
   background-color: var(--color-bg);
@@ -397,52 +374,6 @@ body {
   }
 }
 
-button,
-input[type="submit"] {
-  border: none;
-  outline: none;
-  cursor: pointer;
-  margin: 0;
-  background-color: var(--primary-500);
-  color: var(--primary-50);
-  padding: $unit0 $unit2;
-  border-radius: $unit0; // Slightly rounded corners for a softer look
-  font-weight: 500; // A bit bolder for emphasis
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  transition: background-color 0.2s ease-in-out, transform 0.2s ease-in-out,
-    box-shadow 0.2s ease-in-out;
-
-  // align with icons
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: $unit1;
-
-  &:hover {
-    background-color: var(--primary-600);
-    transform: translateY(-2px); // A slight lift on hover
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
-  }
-
-  &:active {
-    transform: translateY(0); // Return to the original position on click
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  }
-
-  &.humble {
-    background-color: var(--gray-100);
-    color: var(--color-text);
-    &:hover {
-      background-color: var(--color-bg-hover-intense);
-    }
-  }
-}
-
 .add-website-page {
   h1 {
     margin-bottom: $unit3;
@@ -504,10 +435,6 @@ input[type="submit"] {
   }
 }
 
-.secondary {
-  color: var(--gray-500);
-}
-
 .domain-page {
   h1 {
     margin-bottom: $unit3;
@@ -538,122 +465,6 @@ input[type="submit"] {
   input[type="submit"] {
     width: 100%;
   }
-}
-
-.errors {
-  margin-bottom: $unit3;
-  background-color: var(--color-error);
-  color: #fff;
-  padding: $unit1 $unit2;
-  border-radius: $unit0;
-  div {
-    color: #fff;
-  }
-}
-
-.form-group {
-  margin-bottom: $unit3;
-  label {
-    color: var(--color-secondary);
-    display: block;
-    margin-bottom: $unit0;
-    cursor: pointer;
-  }
-  &.inline {
-    display: flex;
-    align-items: center;
-    label {
-      margin-bottom: 0;
-    }
-    input[type="checkbox"] {
-      margin-right: $unit1;
-    }
-  }
-
-  &.checkbox {
-    display: flex;
-    align-items: center;
-    label {
-      margin-bottom: 0;
-    }
-    input[type="checkbox"] {
-      margin-right: $unit1;
-    }
-  }
-}
-
-input[type="text"],
-input[type="password"],
-input[type="email"] {
-  width: 100%;
-  padding: $unit2;
-  border: 1px solid var(--color-table-border);
-  border-radius: $unit0;
-  font-size: $text1;
-  &:focus {
-    outline: none;
-    border-color: var(--color-primary);
-  }
-}
-
-.spinner {
-  display: inline-block;
-  position: relative;
-  width: 80px;
-  height: 80px;
-
-  div {
-    position: absolute;
-    border: $unit0 solid var(--color-primary);
-    opacity: 1;
-    border-radius: 50%;
-    animation: lds-ripple 1s cubic-bezier(0, 0.2, 0.8, 1) infinite;
-  }
-
-  div:nth-child(2) {
-    animation-delay: -0.5s;
-  }
-}
-
-.spinner-container {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-@keyframes lds-ripple {
-  0% {
-    top: 36px;
-    left: 36px;
-    width: 0;
-    height: 0;
-    opacity: 0;
-  }
-  4.9% {
-    top: 36px;
-    left: 36px;
-    width: 0;
-    height: 0;
-    opacity: 0;
-  }
-  5% {
-    top: 36px;
-    left: 36px;
-    width: 0;
-    height: 0;
-    opacity: 1;
-  }
-  100% {
-    top: 0px;
-    left: 0px;
-    width: 72px;
-    height: 72px;
-    opacity: 0;
-  }
-}
-
-.ellipsis {
-  white-space: pre-wrap;
 }
 
 .action-link {

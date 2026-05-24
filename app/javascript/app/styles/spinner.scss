@@ -1,19 +1,26 @@
 .spinner {
   display: inline-block;
   position: relative;
-  width: 80px;
-  height: 80px;
+  width: $unit6;
+  height: $unit6;
 
   div {
+    box-sizing: border-box;
     position: absolute;
-    border: $unit0 solid var(--color-primary);
-    opacity: 1;
+    inset: 0;
+    border: 3px solid transparent;
     border-radius: 50%;
-    animation: lds-ripple 1s cubic-bezier(0, 0.2, 0.8, 1) infinite;
   }
 
+  // faint full track
+  div:nth-child(1) {
+    border-color: var(--gray-200);
+  }
+
+  // colored arc that rotates
   div:nth-child(2) {
-    animation-delay: -0.5s;
+    border-top-color: var(--color-primary);
+    animation: spinner-rotate 0.7s linear infinite;
   }
 }
 
@@ -21,35 +28,11 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  padding: $unit5;
 }
 
-@keyframes lds-ripple {
-  0% {
-    top: 36px;
-    left: 36px;
-    width: 0;
-    height: 0;
-    opacity: 0;
-  }
-  4.9% {
-    top: 36px;
-    left: 36px;
-    width: 0;
-    height: 0;
-    opacity: 0;
-  }
-  5% {
-    top: 36px;
-    left: 36px;
-    width: 0;
-    height: 0;
-    opacity: 1;
-  }
-  100% {
-    top: 0px;
-    left: 0px;
-    width: 72px;
-    height: 72px;
-    opacity: 0;
+@keyframes spinner-rotate {
+  to {
+    transform: rotate(360deg);
   }
 }

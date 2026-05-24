@@ -1,22 +1,24 @@
 .nice-table {
   display: grid;
-  border: 1px solid var(--gray-200);
+  border: 1px solid var(--color-table-border);
   width: 100%;
   border-collapse: collapse;
   border-spacing: 0;
-  border-radius: $unit1;
+  border-radius: $radius-lg;
   font-size: $text1;
-  background-color: var(--color-bg);
+  background-color: #fff;
   max-width: 100%;
   overflow: hidden;
   grid-auto-rows: min-content;
+  box-shadow: var(--shadow-sm);
 
   .cell {
     padding: $unit2 $unit3;
-    border-bottom: 1px solid var(--gray-200);
+    border-bottom: 1px solid var(--color-table-border);
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+    color: var(--gray-700);
 
     &.align-right {
       text-align: right;
@@ -61,7 +63,6 @@
   .header {
     .row {
       text-align: left;
-      font-weight: bold;
     }
 
     .cell {
@@ -69,6 +70,11 @@
       vertical-align: inherit;
       padding: $unit2 $unit3;
       background-color: var(--color-table-header);
+      color: var(--gray-500);
+      font-weight: 600;
+      font-size: $text0;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
     }
   }
 

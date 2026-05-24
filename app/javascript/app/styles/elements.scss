@@ -1,6 +1,14 @@
 * {
-  font-family: "Roboto", sans-serif;
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   color: var(--color-text);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-size: $text1;
+  line-height: 1.5;
+  letter-spacing: -0.006em;
 }
 
 h1,
@@ -9,17 +17,35 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: "Roboto Slab", serif;
-  font-weight: 400;
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: var(--gray-900);
+  line-height: 1.25;
+}
+
+h1 {
+  font-size: $text6;
+}
+h2 {
+  font-size: $text5;
+}
+h3 {
+  font-size: $text3;
+}
+
+code,
+pre {
+  font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
 }
 
 a {
-  color: var(--primary-500);
+  color: var(--color-primary);
   text-decoration: none;
-  transition: color 0.1s ease-in-out;
+  transition: color 0.12s ease-in-out;
   font-weight: 500;
   &:hover {
-    color: var(--primary-700);
+    color: var(--color-primary-hover);
   }
 }
 
@@ -29,44 +55,60 @@ input[type="submit"] {
   outline: none;
   cursor: pointer;
   margin: 0;
-  background-color: var(--primary-500);
-  color: var(--primary-50);
-  padding: $unit0 $unit2;
-  border-radius: $unit0; // Slightly rounded corners for a softer look
-  font-weight: 500; // A bit bolder for emphasis
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  background-color: var(--primary-600);
+  color: #fff;
+  padding: $unit1 $unit3;
+  border-radius: $radius;
+  font-size: $text1;
+  font-weight: 500;
+  letter-spacing: 0;
+  box-shadow: var(--shadow-sm);
   transition:
-    background-color 0.2s ease-in-out,
-    transform 0.2s ease-in-out,
-    box-shadow 0.2s ease-in-out;
+    background-color 0.12s ease-in-out,
+    box-shadow 0.12s ease-in-out;
 
   // align with icons
-  display: flex;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: $unit1;
 
+  svg {
+    font-size: $text2;
+    fill: currentColor;
+  }
+
   &:hover {
-    background-color: var(--primary-600);
-    transform: translateY(-2px); // A slight lift on hover
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    background-color: var(--primary-700);
+  }
+
+  &:focus-visible {
+    box-shadow: var(--ring);
   }
 
   &:active {
-    transform: translateY(0); // Return to the original position on click
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    background-color: var(--primary-800);
+  }
+
+  &:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
   }
 
   &.humble {
-    background-color: var(--gray-100);
-    color: var(--color-text);
+    background-color: #fff;
+    color: var(--gray-700);
+    border: 1px solid var(--color-table-border);
+    box-shadow: var(--shadow-sm);
+    svg {
+      fill: var(--gray-500);
+    }
     &:hover {
-      background-color: var(--color-bg-hover-intense);
+      background-color: var(--gray-50);
+      border-color: var(--gray-300);
+    }
+    &:active {
+      background-color: var(--gray-100);
     }
   }
 }
@@ -77,22 +119,26 @@ input[type="submit"] {
 
 .errors {
   margin-bottom: $unit3;
-  background-color: var(--color-error);
-  color: #fff;
-  padding: $unit1 $unit2;
-  border-radius: $unit0;
+  background-color: var(--danger-50);
+  border: 1px solid var(--danger-200);
+  color: var(--danger-700);
+  padding: $unit2 $unit3;
+  border-radius: $radius;
+  font-size: $text1;
   div {
-    color: #fff;
+    color: var(--danger-700);
   }
 }
 
 .form-group {
   margin-bottom: $unit3;
   label {
-    color: var(--color-secondary);
+    color: var(--gray-700);
     display: block;
-    margin-bottom: $unit0;
+    margin-bottom: $unit1;
     cursor: pointer;
+    font-size: $text1;
+    font-weight: 500;
   }
   &.inline {
     display: flex;
@@ -117,17 +163,34 @@ input[type="submit"] {
   }
 }
 
+input[type="checkbox"],
+input[type="radio"] {
+  accent-color: var(--primary-600);
+  width: $unit2;
+  height: $unit2;
+  cursor: pointer;
+}
+
 input[type="text"],
 input[type="password"],
 input[type="email"] {
   width: 100%;
-  padding: $unit2;
+  padding: $unit2 $unit2;
   border: 1px solid var(--color-table-border);
-  border-radius: $unit0;
+  border-radius: $radius;
   font-size: $text1;
+  background-color: #fff;
+  color: var(--color-text);
+  transition:
+    border-color 0.12s ease-in-out,
+    box-shadow 0.12s ease-in-out;
+  &::placeholder {
+    color: var(--gray-400);
+  }
   &:focus {
     outline: none;
-    border-color: var(--color-primary);
+    border-color: var(--primary-500);
+    box-shadow: var(--ring);
   }
 }
 

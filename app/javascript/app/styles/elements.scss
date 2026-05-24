@@ -1,3 +1,5 @@
+@use "vars";
+
 * {
   font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   color: var(--color-text);
@@ -6,7 +8,7 @@
 }
 
 body {
-  font-size: $text1;
+  font-size: vars.$text1;
   line-height: 1.5;
   letter-spacing: -0.006em;
 }
@@ -25,13 +27,13 @@ h6 {
 }
 
 h1 {
-  font-size: $text6;
+  font-size: vars.$text6;
 }
 h2 {
-  font-size: $text5;
+  font-size: vars.$text5;
 }
 h3 {
-  font-size: $text3;
+  font-size: vars.$text3;
 }
 
 code,
@@ -57,9 +59,9 @@ input[type="submit"] {
   margin: 0;
   background-color: var(--primary-600);
   color: #fff;
-  padding: $unit1 $unit3;
-  border-radius: $radius;
-  font-size: $text1;
+  padding: vars.$unit1 vars.$unit3;
+  border-radius: vars.$radius;
+  font-size: vars.$text1;
   font-weight: 500;
   letter-spacing: 0;
   box-shadow: var(--shadow-sm);
@@ -71,10 +73,10 @@ input[type="submit"] {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: $unit1;
+  gap: vars.$unit1;
 
   svg {
-    font-size: $text2;
+    font-size: vars.$text2;
     fill: currentColor;
   }
 
@@ -118,26 +120,26 @@ input[type="submit"] {
 }
 
 .errors {
-  margin-bottom: $unit3;
+  margin-bottom: vars.$unit3;
   background-color: var(--danger-50);
   border: 1px solid var(--danger-200);
   color: var(--danger-700);
-  padding: $unit2 $unit3;
-  border-radius: $radius;
-  font-size: $text1;
+  padding: vars.$unit2 vars.$unit3;
+  border-radius: vars.$radius;
+  font-size: vars.$text1;
   div {
     color: var(--danger-700);
   }
 }
 
 .form-group {
-  margin-bottom: $unit3;
+  margin-bottom: vars.$unit3;
   label {
     color: var(--gray-700);
     display: block;
-    margin-bottom: $unit1;
+    margin-bottom: vars.$unit1;
     cursor: pointer;
-    font-size: $text1;
+    font-size: vars.$text1;
     font-weight: 500;
   }
   &.inline {
@@ -147,7 +149,7 @@ input[type="submit"] {
       margin-bottom: 0;
     }
     input[type="checkbox"] {
-      margin-right: $unit1;
+      margin-right: vars.$unit1;
     }
   }
 
@@ -158,7 +160,7 @@ input[type="submit"] {
       margin-bottom: 0;
     }
     input[type="checkbox"] {
-      margin-right: $unit1;
+      margin-right: vars.$unit1;
     }
   }
 }
@@ -166,8 +168,8 @@ input[type="submit"] {
 input[type="checkbox"],
 input[type="radio"] {
   accent-color: var(--primary-600);
-  width: $unit2;
-  height: $unit2;
+  width: vars.$unit2;
+  height: vars.$unit2;
   cursor: pointer;
 }
 
@@ -175,10 +177,10 @@ input[type="text"],
 input[type="password"],
 input[type="email"] {
   width: 100%;
-  padding: $unit2 $unit2;
+  padding: vars.$unit2 vars.$unit2;
   border: 1px solid var(--color-table-border);
-  border-radius: $radius;
-  font-size: $text1;
+  border-radius: vars.$radius;
+  font-size: vars.$text1;
   background-color: #fff;
   color: var(--color-text);
   transition:

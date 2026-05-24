@@ -1,623 +1,24 @@
+@use "sass:meta";
+@use "vars.scss";
+
 @import "./reset.css";
-@import "./vars.scss";
-@import "./elements.scss";
-@import "./table.scss";
-@import "./spinner.scss";
-
-body {
-  background-color: var(--color-bg);
-}
-
-.container {
-  width: 100%;
-  padding: 0 $unit4;
-}
-
-.app {
-  width: 100%;
-  height: 100vh;
-  display: flex;
-  nav.sidebar {
-    width: $unit11;
-    background-color: var(--color-sidebar-bg);
-    border-right: 1px solid var(--color-table-border);
-    color: var(--color-sidebar-text);
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    padding-top: $unit4;
-
-    a.navlink {
-      display: flex;
-      align-items: center;
-      cursor: pointer;
-      margin: 1px $unit2;
-      padding: $unit1 $unit2;
-      border-radius: $radius;
-      transition:
-        background-color 0.12s ease-in-out,
-        color 0.12s ease-in-out;
-      color: var(--color-sidebar-text);
-      font-size: $text1;
-      font-weight: 500;
-      line-height: 1.43;
-
-      &:hover {
-        background-color: var(--color-sidebar-bg-hover);
-        color: var(--gray-900);
-      }
-
-      &.active {
-        background-color: var(--color-sidebar-bg-hover-intense);
-        color: var(--color-sidebar-text-hover);
-        svg {
-          fill: var(--color-sidebar-accent);
-        }
-      }
-
-      svg {
-        font-size: $text3;
-        fill: var(--color-sidebar-text-secondary);
-        margin-right: $unit2;
-        transition: fill 0.12s ease-in-out;
-      }
-    }
-
-    header {
-      margin-bottom: $unit3;
-      h1 {
-        font-size: $text3;
-        margin-bottom: $unit1;
-        text-align: center;
-        letter-spacing: -0.01em;
-        color: var(--gray-900);
-      }
-    }
-
-    h2 {
-      font-size: 11px;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
-      color: var(--color-sidebar-text-secondary);
-      margin: $unit3 $unit3 $unit1;
-      display: flex;
-      align-items: center;
-
-      svg {
-        fill: var(--color-sidebar-text-secondary);
-        margin-right: $unit1;
-      }
-    }
-
-    .domain-picker-dropdown {
-      margin: 0 $unit2 $unit3;
-      .dropdown-header {
-        background-color: var(--gray-100);
-        border: 1px solid var(--color-table-border);
-        color: var(--gray-800);
-        border-radius: $radius;
-      }
-      .triangle-icon {
-        color: var(--gray-500);
-      }
-      .dropdown-list {
-        border: 1px solid var(--color-table-border);
-        background-color: #fff;
-        box-shadow: var(--shadow-md);
-        li {
-          color: var(--gray-700);
-          &:hover {
-            background-color: var(--gray-100);
-          }
-        }
-      }
-    }
-
-    .add-website {
-      text-align: center;
-      margin-top: $unit3;
-      a {
-        font-size: $text1;
-        color: var(--color-sidebar-text-secondary);
-        text-decoration: none;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        padding: $unit1 $unit2;
-        border-radius: $radius;
-        transition:
-          background-color 0.12s ease-in-out,
-          color 0.12s ease-in-out;
-        svg {
-          fill: var(--color-sidebar-text-secondary);
-          font-size: $text3;
-          margin-right: $unit1;
-          transition: fill 0.12s ease-in-out;
-        }
-        &:hover {
-          background-color: var(--color-sidebar-bg-hover);
-          color: var(--color-primary);
-          svg {
-            fill: var(--color-primary);
-          }
-        }
-      }
-    }
-
-    .logo {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-bottom: $unit3;
-      img {
-        width: 100%;
-        max-width: $unit12;
-      }
-    }
-
-    .menu {
-      ul {
-        list-style: none;
-        padding: 0;
-        margin: 0;
-        li {
-          margin-bottom: $unit2;
-          a {
-            display: flex;
-            align-items: center;
-            text-decoration: none;
-            color: var(--color-secondary);
-            &:hover {
-              color: var(--color-text);
-            }
-            svg {
-              margin-right: $unit2;
-            }
-          }
-        }
-      }
-    }
-  }
-
-  main {
-    flex: 1;
-    overflow-y: auto;
-  }
-}
-
-.details-link {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: color 0.12s ease-in-out;
-  svg {
-    margin-left: $unit1;
-    fill: var(--color-primary);
-    font-size: $text3;
-    transition: fill 0.12s ease-in-out;
-  }
-  &:hover {
-    color: var(--color-primary-hover);
-    svg {
-      fill: var(--color-primary-hover);
-    }
-  }
-}
-
-.card {
-  box-shadow: var(--shadow);
-  background-color: #fff;
-  border: 1px solid var(--color-table-border);
-  border-radius: $radius-lg;
-}
-
-.no-data {
-  margin-top: $unit4;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 100;
-  font-size: $text2;
-  color: var(--color-secondary);
-}
-
-.agg-reports,
-.all-reports {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  overflow: hidden;
-  align-items: flex-start;
-
-  .filters {
-    width: $unit10;
-    flex-shrink: 0;
-    margin: $unit4 0 $unit4 $unit4;
-    padding: $unit4 $unit3;
-    background-color: #fff;
-    border: 1px solid var(--color-table-border);
-    border-radius: $radius-lg;
-    box-shadow: var(--shadow-sm);
-
-    .filter {
-      margin-bottom: $unit4;
-
-      &:last-child {
-        margin-bottom: 0;
-      }
-
-      &.checkbox {
-        display: flex;
-        flex-direction: row-reverse;
-        align-items: center;
-        justify-content: flex-end;
-        label {
-          margin-bottom: 0;
-          margin-left: $unit1;
-        }
-      }
-
-      label {
-        color: var(--gray-700);
-        display: flex;
-        align-items: center;
-        margin-bottom: $unit1;
-        cursor: pointer;
-        font-size: $text1;
-        font-weight: 500;
-        svg {
-          margin-right: $unit1;
-          fill: var(--color-filters-secondary);
-          font-size: $text2;
-        }
-      }
-
-      .dropdown {
-        .dropdown-header {
-          background-color: #fff;
-          border: 1px solid var(--color-table-border);
-          color: var(--color-text);
-          font-size: $text1;
-        }
-
-        .dropdown-list {
-          background-color: #fff;
-        }
-
-        .dropdown-list li {
-          padding: $unit2 $unit2;
-          cursor: pointer;
-          font-size: $text1;
-        }
-
-        .dropdown-list li:hover {
-          background-color: var(--gray-100);
-        }
-      }
-
-      input[type="text"] {
-        width: 100%;
-        padding: $unit1 $unit2;
-        border-radius: $radius;
-        border: 1px solid var(--color-table-border);
-        background-color: #fff;
-        color: var(--color-text);
-        font-size: $text1;
-        &:focus {
-          outline: none;
-          border-color: var(--primary-500);
-          box-shadow: var(--ring);
-        }
-      }
-
-      textarea {
-        width: 100%;
-        padding: $unit2;
-        border-radius: $radius;
-        border: 1px solid var(--color-table-border);
-        background-color: #fff;
-        color: var(--color-text);
-        font-size: $text1;
-        height: $unit9;
-        resize: vertical;
-        &:focus {
-          outline: none;
-          border-color: var(--primary-500);
-          box-shadow: var(--ring);
-        }
-      }
-    }
-  }
-
-  .data-view {
-    flex-shrink: 1;
-    flex-grow: 1;
-    overflow-x: auto;
-    padding: $unit4;
-
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-    overflow-y: auto;
-
-    .agg-item {
-      background-color: #fff;
-      padding: $unit4;
-      border: 1px solid var(--color-table-border);
-      box-shadow: var(--shadow-sm);
-      margin-bottom: $unit3;
-      border-radius: $radius-lg;
-      transition: box-shadow 0.12s ease-in-out;
-
-      &:hover {
-        box-shadow: var(--shadow-md);
-      }
-
-      .params {
-        .params-head {
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-
-          .left,
-          .right {
-            display: flex;
-            align-items: center;
-          }
-
-          .params-item:not(:last-child) {
-            margin-right: $unit4;
-          }
-        }
-        .params-item {
-          margin-bottom: $unit2;
-          font-size: $text1;
-          .param-name {
-            font-size: $text0;
-            color: var(--color-secondary);
-          }
-        }
-      }
-    }
-
-    .table-view {
-      overflow-y: auto;
-      flex: 1;
-    }
-  }
-
-  .pagination {
-    margin-top: $unit4;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-}
-
-
-.disposition-badge {
-  display: inline-block;
-  font-size: $text0;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.03em;
-  padding: 2px $unit1;
-  border-radius: $unit5;
-  color: var(--warning-700);
-  background-color: var(--warning-50);
-  &.enforce {
-    color: var(--success-700);
-    background-color: var(--success-50);
-  }
-}
-
-.add-website-page {
-  padding: $unit4;
-  h1 {
-    margin-bottom: $unit3;
-  }
-
-  .website-form {
-    width: 100%;
-    max-width: $unit13;
-    margin: 0 auto;
-    padding: $unit4;
-    background-color: #fff;
-    border: 1px solid var(--color-table-border);
-    border-radius: $radius-lg;
-    box-shadow: var(--shadow-sm);
-  }
-
-  .hint {
-    margin-top: $unit1;
-    margin-bottom: $unit3;
-    color: var(--color-secondary);
-    font-size: $text1;
-    code {
-      background-color: var(--gray-100);
-      padding: $unit0 $unit1;
-      border-radius: $radius-sm;
-      color: var(--gray-700);
-      font-size: $text0;
-    }
-  }
-}
-
-.website-edit-page {
-  background-color: var(--color-bg);
-  padding: $unit5 0 $unit7;
-  .container {
-    max-width: $unit15;
-    margin: 0 auto;
-  }
-
-  .setup-header {
-    margin-bottom: $unit4;
-    h1 {
-      margin-bottom: $unit2;
-    }
-    p {
-      max-width: $unit14;
-      line-height: 1.6;
-    }
-  }
-
-  // inline `code` inside prose
-  p code {
-    background-color: var(--gray-100);
-    border: 1px solid var(--color-table-border);
-    padding: 1px $unit0;
-    border-radius: $radius-sm;
-    font-size: $text0;
-    color: var(--primary-700);
-  }
-
-  .instructions-block {
-    background-color: #fff;
-    padding: $unit4;
-    border-radius: $radius-lg;
-    border: 1px solid var(--color-table-border);
-    box-shadow: var(--shadow-sm);
-  }
-
-  .endpoint-label {
-    display: block;
-    font-size: $text0;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.04em;
-    color: var(--gray-500);
-    margin-bottom: $unit2;
-  }
-
-  .copy-field {
-    display: flex;
-    align-items: stretch;
-    gap: $unit2;
-    code {
-      flex: 1;
-      display: flex;
-      align-items: center;
-      background-color: var(--gray-50);
-      border: 1px solid var(--color-table-border);
-      border-radius: $radius;
-      padding: $unit2 $unit3;
-      font-size: $text1;
-      color: var(--gray-800);
-      overflow-x: auto;
-      white-space: nowrap;
-    }
-  }
-
-  .copy-btn {
-    flex-shrink: 0;
-    align-self: stretch;
-    white-space: nowrap;
-    svg {
-      font-size: $text1;
-    }
-  }
-
-  .i2 {
-    margin-top: $unit5;
-    h2 {
-      display: flex;
-      align-items: center;
-      gap: $unit2;
-      font-size: $text4;
-    }
-    p {
-      margin-top: $unit2;
-      margin-bottom: $unit3;
-      color: var(--gray-600);
-      line-height: 1.6;
-    }
-
-    .directive {
-      font-family: "JetBrains Mono", ui-monospace, monospace;
-      font-size: $text2;
-      color: var(--primary-700);
-      font-weight: 500;
-    }
-
-    .step-badge {
-      display: inline-block;
-      font-size: $text0;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.04em;
-      padding: 2px $unit1;
-      border-radius: $unit5;
-      background-color: var(--primary-100);
-      color: var(--primary-700);
-      &.legacy {
-        background-color: var(--gray-200);
-        color: var(--gray-600);
-      }
-    }
-  }
-
-  .copy-block {
-    position: relative;
-    .copy-btn {
-      position: absolute;
-      top: $unit2;
-      right: $unit2;
-      z-index: 1;
-    }
-    pre {
-      margin: 0;
-      padding: $unit3;
-      padding-right: $unit8;
-      color: var(--gray-100);
-      background-color: var(--gray-900);
-      border-radius: $radius;
-      border: 1px solid var(--gray-800);
-      overflow-x: auto;
-      font-size: $text0;
-      line-height: 1.7;
-      code {
-        color: inherit;
-      }
-    }
-    .copy-btn svg {
-      font-size: $text1;
-    }
-  }
-}
+@include meta.load-css("elements.scss");
+@include meta.load-css("components/table.scss");
+@include meta.load-css("components/spinner.scss");
+@include meta.load-css("components/dropdown.scss");
+@include meta.load-css("layout.scss");
+@include meta.load-css("pages/add.scss");
+@include meta.load-css("pages/edit.scss");
+@include meta.load-css("pages/reports.scss");
+@include meta.load-css("pages/login.scss");
 
 .domain-page {
-  padding: $unit4 0;
+  padding: vars.$unit4 0;
   h1 {
-    margin-bottom: $unit3;
+    margin-bottom: vars.$unit3;
   }
   .domain-body {
     height: 100%;
-  }
-}
-
-.login-page,
-.signup-page {
-  h2 {
-    text-align: center;
-    margin-bottom: $unit4;
-  }
-  padding: $unit5;
-  border-radius: $radius-lg;
-  background-color: #fff;
-  max-width: $unit12;
-  margin: $unit6 auto;
-  border: 1px solid var(--color-table-border);
-  box-shadow: var(--shadow-md);
-
-  .links {
-    margin-top: $unit3;
-    text-align: center;
-  }
-
-  input[type="submit"] {
-    width: 100%;
   }
 }
 
@@ -625,7 +26,7 @@ body {
   display: inline-flex;
   align-items: center;
   svg {
-    margin-left: $unit0;
+    margin-left: vars.$unit0;
     fill: var(--color-primary);
   }
 }
@@ -635,53 +36,54 @@ body {
   background-color: #fff;
   border: 1px solid var(--color-table-border);
   box-shadow: var(--shadow-sm);
-  margin: 0 $unit3 $unit3;
-  border-radius: $radius-lg;
+  margin: 0 vars.$unit3 vars.$unit3;
+  border-radius: vars.$radius-lg;
 
   .report-details-raw {
-    padding: $unit4;
+    padding: vars.$unit4;
     white-space: pre-wrap;
-    font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
-    font-size: $text0;
+    font-family:
+      "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: vars.$text0;
     line-height: 1.7;
     color: var(--gray-700);
   }
 
   .report-view-switch {
     position: absolute;
-    top: $unit2;
-    right: $unit2;
-    padding: $unit0 $unit2;
-    font-size: $text0;
+    top: vars.$unit2;
+    right: vars.$unit2;
+    padding: vars.$unit0 vars.$unit2;
+    font-size: vars.$text0;
     z-index: 2;
     svg {
-      font-size: $text2;
+      font-size: vars.$text2;
     }
   }
 
   .report-details-body {
-    border-radius: $radius;
-    padding: $unit4;
+    border-radius: vars.$radius;
+    padding: vars.$unit4;
     display: flex;
 
     .report-details-ua {
-      width: $unit11;
+      width: vars.$unit11;
     }
 
     .report-details-info {
-      margin-left: $unit5;
+      margin-left: vars.$unit5;
       flex: 1;
     }
 
     h3 {
-      margin-bottom: $unit3;
-      font-size: $text0;
+      margin-bottom: vars.$unit3;
+      font-size: vars.$text0;
       text-transform: uppercase;
       letter-spacing: 0.04em;
       background-color: var(--primary-100);
       color: var(--primary-700);
-      padding: $unit0 $unit2;
-      border-radius: $unit5;
+      padding: vars.$unit0 vars.$unit2;
+      border-radius: vars.$unit5;
       display: inline-block;
       font-weight: 600;
     }
@@ -689,14 +91,14 @@ body {
     .report-details-item {
       display: flex;
       align-items: center;
-      margin-bottom: $unit2;
+      margin-bottom: vars.$unit2;
 
       .report-details-item-label {
         color: var(--gray-500);
         display: block;
-        font-size: $text1;
-        margin-right: $unit2;
-        width: $unit9;
+        font-size: vars.$text1;
+        margin-right: vars.$unit2;
+        width: vars.$unit9;
         font-weight: 500;
       }
 
@@ -709,29 +111,29 @@ body {
 }
 
 .home-page {
-  padding: $unit5 $unit4;
+  padding: vars.$unit5 vars.$unit4;
   h1 {
-    margin-bottom: $unit4;
+    margin-bottom: vars.$unit4;
   }
 
   .domain-list {
     display: flex;
     flex-wrap: wrap;
-    gap: $unit3;
+    gap: vars.$unit3;
     flex-direction: column;
     a.domain {
       display: flex;
       flex-direction: row;
       align-items: center;
       justify-content: space-between;
-      padding: $unit4;
-      border-radius: $radius-lg;
+      padding: vars.$unit4;
+      border-radius: vars.$radius-lg;
       background-color: #fff;
       border: 1px solid var(--color-table-border);
       cursor: pointer;
       box-shadow: var(--shadow-sm);
-      width: $unit14;
-      height: $unit5;
+      width: vars.$unit14;
+      height: vars.$unit5;
       transition:
         box-shadow 0.12s ease-in-out,
         border-color 0.12s ease-in-out,
@@ -743,13 +145,13 @@ body {
         transform: translateY(-1px);
       }
       .domain-host {
-        font-size: $text3;
+        font-size: vars.$text3;
         font-weight: 600;
         margin-bottom: 0;
         color: var(--gray-900);
       }
       .reports-count {
-        font-size: $text1;
+        font-size: vars.$text1;
         color: var(--gray-500);
       }
     }
@@ -758,18 +160,18 @@ body {
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: $unit1;
-      margin-bottom: $unit3;
-      padding: $unit3;
-      width: $unit14;
-      border-radius: $radius-lg;
+      gap: vars.$unit1;
+      margin-bottom: vars.$unit3;
+      padding: vars.$unit3;
+      width: vars.$unit14;
+      border-radius: vars.$radius-lg;
       border: 1px dashed var(--gray-300);
       cursor: pointer;
       transition:
         background-color 0.12s ease-in-out,
         border-color 0.12s ease-in-out,
         color 0.12s ease-in-out;
-      font-size: $text1;
+      font-size: vars.$text1;
       font-weight: 500;
       color: var(--gray-500);
       &:hover {
@@ -789,10 +191,10 @@ body {
 }
 
 .flash {
-  padding: $unit2 $unit3;
-  margin-bottom: $unit3;
-  border-radius: $radius;
-  font-size: $text1;
+  padding: vars.$unit2 vars.$unit3;
+  margin-bottom: vars.$unit3;
+  border-radius: vars.$radius;
+  font-size: vars.$text1;
 
   &.notice {
     background-color: var(--success-50);
@@ -807,98 +209,32 @@ body {
   }
 }
 
-.dropdown {
-  width: 100%;
-  position: relative;
-
-  &.open {
-    .dropdown-list {
-      transform: scaleY(1);
-    }
-
-    .dropdown-header {
-      border-color: var(--primary-400);
-    }
-  }
-
-  .dropdown-header {
-    background-color: #fff;
-    border: 1px solid var(--color-table-border);
-    padding: $unit1 $unit2;
-    cursor: pointer;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-size: $text1;
-    border-radius: $radius;
-    transition: border-color 0.12s ease-in-out;
-  }
-
-  .dropdown-list {
-    border: 1px solid var(--color-table-border);
-    position: absolute;
-    width: 100%;
-    z-index: 10;
-    overflow-y: auto;
-    background-color: #fff;
-    margin-top: $unit0;
-    border-radius: $radius;
-    box-shadow: var(--shadow-md);
-    transform: scaleY(0);
-    transform-origin: top;
-    transition: transform 0.15s ease-in-out;
-    display: block;
-  }
-
-  .triangle-icon {
-    font-size: $text0;
-    color: var(--gray-400);
-  }
-
-  ul {
-    list-style: none;
-    padding: $unit0;
-    margin: 0;
-  }
-
-  .dropdown-list li {
-    padding: $unit1 $unit2;
-    cursor: pointer;
-    font-size: $text1;
-    border-radius: $radius-sm;
-  }
-
-  .dropdown-list li:hover {
-    background-color: var(--gray-100);
-  }
-}
-
 .report-chart {
-  margin-bottom: $unit4;
-  margin-right: $unit3;
+  margin-bottom: vars.$unit4;
+  margin-right: vars.$unit3;
   position: relative;
   background-color: #fff;
   border: 1px solid var(--color-table-border);
-  border-radius: $radius-lg;
-  padding: $unit3;
+  border-radius: vars.$radius-lg;
+  padding: vars.$unit3;
   box-shadow: var(--shadow-sm);
 
   canvas {
     width: 100%;
-    max-height: $unit11;
+    max-height: vars.$unit11;
   }
 
   .toggle-show-btn {
     position: absolute;
-    top: $unit2;
-    right: $unit2;
-    padding: $unit0 $unit1;
-    font-size: $text0;
+    top: vars.$unit2;
+    right: vars.$unit2;
+    padding: vars.$unit0 vars.$unit1;
+    font-size: vars.$text0;
     color: var(--color-secondary);
     background-color: transparent;
     box-shadow: none;
     svg {
-      font-size: $text2;
+      font-size: vars.$text2;
       fill: var(--color-secondary);
     }
     &:hover {
@@ -909,7 +245,7 @@ body {
 
   &.hidden {
     margin-bottom: 0;
-    padding: $unit1 $unit3;
+    padding: vars.$unit1 vars.$unit3;
     .canvas-wrapper {
       display: none;
     }

@@ -1,0 +1,259 @@
+@use "../vars";
+
+.agg-reports,
+.all-reports {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  overflow: hidden;
+  align-items: flex-start;
+
+  .filters {
+    width: vars.$unit10;
+    flex-shrink: 0;
+    margin: vars.$unit4 0 vars.$unit4 vars.$unit4;
+    padding: vars.$unit4 vars.$unit3;
+    background-color: #fff;
+    border: 1px solid var(--color-table-border);
+    border-radius: vars.$radius-lg;
+    box-shadow: var(--shadow-sm);
+
+    .filter {
+      margin-bottom: vars.$unit4;
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+
+      &.checkbox {
+        display: flex;
+        flex-direction: row-reverse;
+        align-items: center;
+        justify-content: flex-end;
+        label {
+          margin-bottom: 0;
+          margin-left: vars.$unit1;
+        }
+      }
+
+      label {
+        color: var(--gray-700);
+        display: flex;
+        align-items: center;
+        margin-bottom: vars.$unit1;
+        cursor: pointer;
+        font-size: vars.$text1;
+        font-weight: 500;
+        svg {
+          margin-right: vars.$unit1;
+          fill: var(--color-filters-secondary);
+          font-size: vars.$text2;
+        }
+      }
+
+      .dropdown {
+        .dropdown-header {
+          background-color: #fff;
+          border: 1px solid var(--color-table-border);
+          color: var(--color-text);
+          font-size: vars.$text1;
+        }
+
+        .dropdown-list {
+          background-color: #fff;
+        }
+
+        .dropdown-list li {
+          padding: vars.$unit2 vars.$unit2;
+          cursor: pointer;
+          font-size: vars.$text1;
+        }
+
+        .dropdown-list li:hover {
+          background-color: var(--gray-100);
+        }
+      }
+
+      input[type="text"] {
+        width: 100%;
+        padding: vars.$unit1 vars.$unit2;
+        border-radius: vars.$radius;
+        border: 1px solid var(--color-table-border);
+        background-color: #fff;
+        color: var(--color-text);
+        font-size: vars.$text1;
+        &:focus {
+          outline: none;
+          border-color: var(--primary-500);
+          box-shadow: var(--ring);
+        }
+      }
+
+      textarea {
+        width: 100%;
+        padding: vars.$unit2;
+        border-radius: vars.$radius;
+        border: 1px solid var(--color-table-border);
+        background-color: #fff;
+        color: var(--color-text);
+        font-size: vars.$text1;
+        height: vars.$unit9;
+        resize: vertical;
+        &:focus {
+          outline: none;
+          border-color: var(--primary-500);
+          box-shadow: var(--ring);
+        }
+      }
+    }
+  }
+
+  .data-view {
+    flex-shrink: 1;
+    flex-grow: 1;
+    overflow-x: auto;
+    padding: vars.$unit4;
+
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    overflow-y: auto;
+
+    .agg-item {
+      background-color: #fff;
+      padding: vars.$unit4;
+      border: 1px solid var(--color-table-border);
+      box-shadow: var(--shadow-sm);
+      margin-bottom: vars.$unit3;
+      border-radius: vars.$radius-lg;
+      transition: box-shadow 0.12s ease-in-out;
+
+      &:hover {
+        box-shadow: var(--shadow-md);
+      }
+
+      .params {
+        .params-head {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+
+          .left,
+          .right {
+            display: flex;
+            align-items: center;
+          }
+
+          .params-item:not(:last-child) {
+            margin-right: vars.$unit4;
+          }
+        }
+        .params-item {
+          margin-bottom: vars.$unit2;
+          font-size: vars.$text1;
+          .param-name {
+            font-size: vars.$text0;
+            color: var(--color-secondary);
+          }
+        }
+      }
+    }
+
+    .table-view {
+      overflow-y: auto;
+      flex: 1;
+    }
+  }
+
+  .pagination {
+    margin-top: vars.$unit4;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .no-data {
+    margin-top: vars.$unit4;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100;
+    font-size: vars.$text2;
+    color: var(--color-secondary);
+  }
+
+  .details-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: color 0.12s ease-in-out;
+    svg {
+      margin-left: vars.$unit1;
+      fill: var(--color-primary);
+      font-size: vars.$text3;
+      transition: fill 0.12s ease-in-out;
+    }
+    &:hover {
+      color: var(--color-primary-hover);
+      svg {
+        fill: var(--color-primary-hover);
+      }
+    }
+  }
+
+  .disposition-badge {
+    display: inline-block;
+    font-size: vars.$text0;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    padding: 2px vars.$unit1;
+    border-radius: vars.$unit5;
+    color: var(--warning-700);
+    background-color: var(--warning-50);
+    &.enforce {
+      color: var(--success-700);
+      background-color: var(--success-50);
+    }
+  }
+}
+
+// Agg-reports has a single filter, so put it in a slim horizontal bar across
+// the top rather than a left sidebar — no bubble, label, or extra chrome.
+.agg-reports {
+  flex-direction: column;
+  align-items: stretch;
+
+  .filters {
+    width: auto;
+    margin: vars.$unit3 vars.$unit4 0;
+    padding: 0;
+    background-color: transparent;
+    border: none;
+    box-shadow: none;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: vars.$unit4;
+
+    .filter {
+      display: flex;
+      align-items: center;
+      gap: vars.$unit2;
+
+      label {
+        display: none;
+      }
+
+      .dropdown {
+        min-width: vars.$unit9;
+      }
+    }
+  }
+
+  // The bar already provides the top gap; drop the data-view's own top padding
+  // so the filters and table aren't double-spaced.
+  .data-view {
+    padding-top: vars.$unit3;
+  }
+}

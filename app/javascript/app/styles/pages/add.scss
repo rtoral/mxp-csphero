@@ -1,0 +1,33 @@
+@use "../vars";
+
+.add-website-page {
+  padding: vars.$unit4;
+  h1 {
+    margin-bottom: vars.$unit3;
+  }
+
+  .website-form {
+    width: 100%;
+    max-width: vars.$unit13;
+    margin: 0 auto;
+    padding: vars.$unit4;
+    background-color: #fff;
+    border: 1px solid var(--color-table-border);
+    border-radius: vars.$radius-lg;
+    box-shadow: var(--shadow-sm);
+  }
+
+  .hint {
+    margin-top: vars.$unit1;
+    margin-bottom: vars.$unit3;
+    color: var(--color-secondary);
+    font-size: vars.$text1;
+    code {
+      background-color: var(--gray-100);
+      padding: vars.$unit0 vars.$unit1;
+      border-radius: vars.$radius-sm;
+      color: var(--gray-700);
+      font-size: vars.$text0;
+    }
+  }
+}

@@ -89,13 +89,13 @@ const AggReports: React.FC<{}> = ({}) => {
           {v.params.disposition?.substring(0, 1)}
         </div>
       ),
-      width: "32px",
+      width: "56px",
     },
     {
       key: "violated_directive",
       label: "Directive",
       render: (v: AggReport) => v.params.violated_directive,
-      width: "96px",
+      width: "128px",
     },
     {
       key: "blocked_uri",
@@ -107,7 +107,7 @@ const AggReports: React.FC<{}> = ({}) => {
       label: "#",
       render: (v: AggReport) => v.count,
       align: "right",
-      width: "32px",
+      width: "72px",
     },
     {
       key: "last",
@@ -118,7 +118,7 @@ const AggReports: React.FC<{}> = ({}) => {
         </span>
       ),
       align: "right",
-      width: "64px",
+      width: "112px",
     },
     {
       key: "view_all_link",

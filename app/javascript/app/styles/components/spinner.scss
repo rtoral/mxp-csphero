@@ -1,8 +1,10 @@
+@use "../vars";
+
 .spinner {
   display: inline-block;
   position: relative;
-  width: $unit6;
-  height: $unit6;
+  width: vars.$unit6;
+  height: vars.$unit6;
 
   div {
     box-sizing: border-box;
@@ -28,7 +30,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: $unit5;
+  padding: vars.$unit5;
 }
 
 @keyframes spinner-rotate {

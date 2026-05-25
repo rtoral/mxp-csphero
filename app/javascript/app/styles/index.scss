@@ -7,6 +7,7 @@
 @include meta.load-css("components/spinner.scss");
 @include meta.load-css("components/dropdown.scss");
 @include meta.load-css("layout.scss");
+@include meta.load-css("pages/home.scss");
 @include meta.load-css("pages/add.scss");
 @include meta.load-css("pages/edit.scss");
 @include meta.load-css("pages/reports.scss");
@@ -105,86 +106,6 @@
       .report-details-item-value {
         flex: 1;
         color: var(--gray-800);
-      }
-    }
-  }
-}
-
-.home-page {
-  padding: vars.$unit5 vars.$unit4;
-  h1 {
-    margin-bottom: vars.$unit4;
-  }
-
-  .domain-list {
-    display: flex;
-    flex-wrap: wrap;
-    gap: vars.$unit3;
-    flex-direction: column;
-    a.domain {
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      justify-content: space-between;
-      padding: vars.$unit4;
-      border-radius: vars.$radius-lg;
-      background-color: #fff;
-      border: 1px solid var(--color-table-border);
-      cursor: pointer;
-      box-shadow: var(--shadow-sm);
-      width: vars.$unit14;
-      height: vars.$unit5;
-      transition:
-        box-shadow 0.12s ease-in-out,
-        border-color 0.12s ease-in-out,
-        transform 0.12s ease-in-out;
-      margin-bottom: 0;
-      &:hover {
-        box-shadow: var(--shadow-md);
-        border-color: var(--primary-300);
-        transform: translateY(-1px);
-      }
-      .domain-host {
-        font-size: vars.$text3;
-        font-weight: 600;
-        margin-bottom: 0;
-        color: var(--gray-900);
-      }
-      .reports-count {
-        font-size: vars.$text1;
-        color: var(--gray-500);
-      }
-    }
-
-    a.add-domain {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: vars.$unit1;
-      margin-bottom: vars.$unit3;
-      padding: vars.$unit3;
-      width: vars.$unit14;
-      border-radius: vars.$radius-lg;
-      border: 1px dashed var(--gray-300);
-      cursor: pointer;
-      transition:
-        background-color 0.12s ease-in-out,
-        border-color 0.12s ease-in-out,
-        color 0.12s ease-in-out;
-      font-size: vars.$text1;
-      font-weight: 500;
-      color: var(--gray-500);
-      &:hover {
-        color: var(--color-primary);
-        border-color: var(--primary-300);
-        background-color: var(--primary-50);
-        svg {
-          fill: var(--color-primary);
-        }
-      }
-      svg {
-        fill: var(--gray-400);
-        transition: fill 0.12s ease-in-out;
       }
     }
   }

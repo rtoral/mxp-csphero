@@ -2,21 +2,9 @@ export type Report = {
   id: number;
   website_id: number;
   created_at: string;
-  raw_body: {
-    "csp-report": {
-      "document-uri": string;
-      referrer: string;
-      "violated-directive": string;
-      "effective-directive": string;
-      "original-policy": string;
-      disposition: string;
-      "blocked-uri": string;
-      "line-number": number;
-      "source-file": string;
-      "status-code": number;
-      "script-sample": string;
-    };
-  };
+  // Legacy report-uri sends `{ "csp-report": {...} }`; the newer
+  // Reporting-Endpoints API sends an array of report objects.
+  raw_body: unknown;
 
   document_uri: string;
   violated_directive: string;

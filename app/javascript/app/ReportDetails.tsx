@@ -123,7 +123,7 @@ const ReportDetails: React.FC<{ report: Report }> = ({ report }) => {
 
       {view === "raw" && (
         <div className="report-details-raw">
-          {JSON.stringify(report.raw_body["csp-report"], null, 2)}
+          {JSON.stringify(report.raw_body, null, 2)}
         </div>
       )}
     </div>

@@ -1,6 +1,4 @@
 class ReportsController < ApplicationController
-  skip_before_action :verify_authenticity_token
-
   def create
     website = Website.find_by(token: params[:token])
     if website.nil?

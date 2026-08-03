@@ -1,9 +1,5 @@
 class User < ApplicationRecord
-  # Include default devise modules. Others available are:
-  # :lockable, :timeoutable, :trackable and :omniauthable
-  devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :validatable,
-         :confirmable, :trackable
+  validates :auth0_id, presence: true, uniqueness: true
 
   has_many :memberships, dependent: :destroy
   has_many :companies, through: :memberships
@@ -12,6 +8,15 @@ class User < ApplicationRecord
 
   # create default company
   after_create :create_default_company
+
+  # Finds the User for a verified Auth0 token payload, creating one on first
+  # login. `sub` is Auth0's stable per-user id (e.g. "auth0|abc123" or
+  # "google-oauth2|...") — it never changes even if the user's email does.
+  def self.find_or_create_from_auth0(payload)
+    find_or_create_by!(auth0_id: payload["sub"]) do |user|
+      user.email = payload["email"]
+    end
+  end
 
   def create_default_company
     company = Company.create!(name: "DEFAULT")

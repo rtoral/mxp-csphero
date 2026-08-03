@@ -1,4 +1,5 @@
 import type { AggReport, Report, ReportTimeAgg, User, Website } from "./models";
+import { getAccessToken } from "./auth/tokenProvider";
 
 export default {
   reports: {
@@ -109,13 +110,15 @@ async function api(
   data?: { [k: string]: string },
   signal?: AbortSignal
 ) {
+  const token = await getAccessToken();
+
   const attrs: FetchParams = {
     method,
     headers: {
       Accept: "application/json",
       "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
     },
-    credentials: "include",
   };
 
   if (data) {
@@ -124,15 +127,6 @@ async function api(
     } else {
       attrs.body = JSON.stringify(data);
     }
-  }
-
-  // csrf
-  const meta = document.querySelectorAll<HTMLMetaElement>(
-    "[name='csrf-token']"
-  )[0];
-  if (meta) {
-    // @ts-ignore
-    attrs.headers["X-CSRF-Token"] = meta.content;
   }
 
   if (signal) {

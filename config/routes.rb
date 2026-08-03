@@ -1,8 +1,5 @@
 Rails.application.routes.draw do
 
-  # devise routes for user authentication
-  devise_for :users, controllers: { registrations: 'registrations' }
-
   # root fot the dashboard
   root to: "app#index"
   

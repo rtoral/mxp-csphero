@@ -13,8 +13,8 @@ gem "importmap-rails"
 # integrates with vite
 gem "vite_rails"
 
-# authentication and authorization
-gem "devise", "~> 4.9"
+# authentication: verifies Auth0-issued JWTs (RS256 via JWKS)
+gem "jwt"
 
 # parses user agent data
 gem "user_agent_parser", "~> 2.15"
@@ -22,12 +22,14 @@ gem "user_agent_parser", "~> 2.15"
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem "debug", platforms: %i[ mri windows ], require: "debug/prelude"
+
+  # loads AUTH0_* / DB env vars from .env in development and test
+  gem "dotenv-rails"
 end
 
 group :development do
   # Use console on exceptions pages [https://github.com/rails/web-console]
   gem "web-console"
-  gem "letter_opener"
 end
 
 group :test do

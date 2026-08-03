@@ -1,6 +1,7 @@
 import { Link, NavLink, useLocation } from "react-router-dom";
 import type { Website } from "./models";
 import * as React from "react";
+import { useAuth0 } from "@auth0/auth0-react";
 import Dropdown from "./components/Dropdown";
 
 import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
@@ -10,6 +11,7 @@ import PlusIcon from "@mui/icons-material/Add";
 
 const Sidebar: React.FC<{ websites: Website[] }> = ({ websites }) => {
   const pathname = useLocation().pathname;
+  const { logout } = useAuth0();
 
   let domainId = null;
   if (pathname.startsWith("/domains/")) {
@@ -66,7 +68,14 @@ const Sidebar: React.FC<{ websites: Website[] }> = ({ websites }) => {
           </>
         )}
         <h2>Account</h2>
-        <a href="/" className="navlink">
+        <a
+          href="#"
+          className="navlink"
+          onClick={(e) => {
+            e.preventDefault();
+            logout({ logoutParams: { returnTo: window.location.origin } });
+          }}
+        >
           <LogoutOutlinedIcon />
           Log out
         </a>

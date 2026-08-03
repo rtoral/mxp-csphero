@@ -3,12 +3,9 @@ require "test_helper"
 class UserTest < ActiveSupport::TestCase
 
   EMAIL = "test@example.com"
-  PWRD = "password"
 
   setup do
-    @user = User.new(email: EMAIL, password: PWRD)
-    @user.skip_confirmation!
-    @user.save!
+    @user = User.create!(email: EMAIL, auth0_id: "auth0|test123")
   end
 
   test "creates a default company for a new user" do

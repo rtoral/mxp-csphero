@@ -2,6 +2,7 @@
   "name": "app",
   "private": "true",
   "dependencies": {
+    "@auth0/auth0-react": "^2.22.1",
     "@emotion/styled": "^11.14.1",
     "@mui/icons-material": "^9.0.1",
     "chart.js": "^4.4.0",

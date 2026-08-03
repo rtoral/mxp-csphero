@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_05_24_160210) do
+ActiveRecord::Schema[8.1].define(version: 2026_08_03_223543) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -178,24 +178,12 @@ ActiveRecord::Schema[8.1].define(version: 2026_05_24_160210) do
 
   create_table "users", force: :cascade do |t|
     t.boolean "accept_terms"
-    t.datetime "confirmation_sent_at"
-    t.string "confirmation_token"
-    t.datetime "confirmed_at"
+    t.string "auth0_id"
     t.datetime "created_at", null: false
-    t.datetime "current_sign_in_at"
-    t.string "current_sign_in_ip"
-    t.string "email", default: "", null: false
-    t.string "encrypted_password", default: "", null: false
-    t.datetime "last_sign_in_at"
-    t.string "last_sign_in_ip"
-    t.datetime "remember_created_at"
-    t.datetime "reset_password_sent_at"
-    t.string "reset_password_token"
-    t.integer "sign_in_count", default: 0, null: false
-    t.string "unconfirmed_email"
+    t.string "email"
     t.datetime "updated_at", null: false
+    t.index ["auth0_id"], name: "index_users_on_auth0_id", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
-    t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
   create_table "websites", force: :cascade do |t|

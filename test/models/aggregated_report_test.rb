@@ -3,12 +3,9 @@ require "test_helper"
 class AggregatedReportTest < ActiveSupport::TestCase
 
   EMAIL = "test@example.com"
-  PWRD = "password"
 
   setup do
-    @user = User.new(email: EMAIL, password: PWRD)
-    @user.skip_confirmation!
-    @user.save!
+    @user = User.create!(email: EMAIL, auth0_id: "auth0|test456")
   end
 
   test "loads agg reports for a website" do

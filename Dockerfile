@@ -46,6 +46,16 @@ RUN npm install && npm cache clean --force
 # Copy application code
 COPY . .
 
+# Vite bakes these into the built JS bundle at compile time — unlike
+# AUTH0_DOMAIN/AUTH0_AUDIENCE below, they can't be supplied later via
+# docker-compose env vars, since by then the assets are already static files.
+ARG VITE_AUTH0_DOMAIN
+ARG VITE_AUTH0_CLIENT_ID
+ARG VITE_AUTH0_AUDIENCE
+ENV VITE_AUTH0_DOMAIN=${VITE_AUTH0_DOMAIN} \
+    VITE_AUTH0_CLIENT_ID=${VITE_AUTH0_CLIENT_ID} \
+    VITE_AUTH0_AUDIENCE=${VITE_AUTH0_AUDIENCE}
+
 # Precompiling assets for production without requiring secret RAILS_MASTER_KEY
 RUN SECRET_KEY_BASE_DUMMY=1 ./bin/rails assets:precompile
 

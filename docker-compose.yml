@@ -12,6 +12,12 @@ x-app-env: &app-env
   # Public URL used in confirmation / password-reset email links.
   APP_HOST: csphero.example.com
   APP_PROTOCOL: https
+  # Auth0 tenant/API used to verify the bearer tokens the frontend sends.
+  # VITE_AUTH0_* counterparts are NOT set here — Vite bakes those into the
+  # static JS bundle at image build time (see Dockerfile ARGs), so they must
+  # be passed as --build-arg when the image is built, not as runtime env here.
+  AUTH0_DOMAIN: your-tenant.auth0.com
+  AUTH0_AUDIENCE: replace_with_your_auth0_api_identifier
   # SMTP — works with any provider (Mailgun, Postmark, SES, plain SMTP, ...).
   # Example below is Mailgun (US); for EU use smtp.eu.mailgun.org.
   # Leave SMTP_ADDRESS unset/empty to disable outbound email entirely.

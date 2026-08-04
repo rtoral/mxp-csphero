@@ -32,6 +32,13 @@ export const start = () => {
           audience: auth0Audience,
         }}
         onRedirectCallback={onRedirectCallback}
+        // Default cacheLocation is "memory", so a page reload wipes the
+        // session and forces a re-login unless the silent-SSO iframe check
+        // succeeds — which third-party-cookie blocking (Safari, Chrome) can
+        // break. Persisting to localStorage + refresh tokens survives reloads
+        // without depending on that iframe check.
+        cacheLocation="localstorage"
+        useRefreshTokens={true}
       >
         <AuthGate>
           <App />

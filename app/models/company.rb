@@ -1,4 +1,6 @@
 class Company < ApplicationRecord
+  DEFAULT_NAME = "Maxipublica"
+
   validates :name, presence: true
 
   has_many :memberships, dependent: :destroy

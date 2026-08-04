@@ -19,7 +19,7 @@ class User < ApplicationRecord
   end
 
   def create_default_company
-    company = Company.create!(name: "DEFAULT")
+    company = Company.find_or_create_by!(name: Company::DEFAULT_NAME)
     Membership.create!(company: company, user: self, role: "owner")
   end
 

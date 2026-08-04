@@ -1,34 +1,44 @@
 # Shared app configuration used by both the web and worker containers.
 # They run the same image and need identical env (DB creds, secrets, SMTP).
+# Values are pulled from .env (see .env.example / README) — no secrets are
+# hardcoded here.
 x-app-env: &app-env
   RAILS_ENV: production
   NODE_ENV: production
-  SECRET_KEY_BASE: your_secret_key_base_here
+  SECRET_KEY_BASE: ${SECRET_KEY_BASE}
   DB_HOST: db
   DB_PORT: 5432
-  DB_NAME: csphero_production
-  DB_USERNAME: myusername
-  DB_PASSWORD: replace_with_your_password
+  DB_NAME: ${DB_NAME:-csphero_production}
+  DB_USERNAME: ${DB_USERNAME:-csphero}
+  DB_PASSWORD: ${DB_PASSWORD}
   # Public URL used in confirmation / password-reset email links.
-  APP_HOST: csphero.example.com
-  APP_PROTOCOL: https
+  APP_HOST: ${APP_HOST:-localhost}
+  APP_PROTOCOL: ${APP_PROTOCOL:-http}
   # Auth0 tenant/API used to verify the bearer tokens the frontend sends.
   # VITE_AUTH0_* counterparts are NOT set here — Vite bakes those into the
-  # static JS bundle at image build time (see Dockerfile ARGs), so they must
-  # be passed as --build-arg when the image is built, not as runtime env here.
-  AUTH0_DOMAIN: your-tenant.auth0.com
-  AUTH0_AUDIENCE: replace_with_your_auth0_api_identifier
+  # static JS bundle at image build time (see build.args below), so they
+  # must be passed as --build-arg / build args, not as runtime env here.
+  AUTH0_DOMAIN: ${AUTH0_DOMAIN}
+  AUTH0_AUDIENCE: ${AUTH0_AUDIENCE}
   # SMTP — works with any provider (Mailgun, Postmark, SES, plain SMTP, ...).
-  # Example below is Mailgun (US); for EU use smtp.eu.mailgun.org.
   # Leave SMTP_ADDRESS unset/empty to disable outbound email entirely.
-  SMTP_ADDRESS: smtp.mailgun.org
-  SMTP_PORT: 587
-  SMTP_DOMAIN: csphero.example.com
-  SMTP_USERNAME: postmaster@csphero.example.com
-  SMTP_PASSWORD: replace_with_your_smtp_password
-  SMTP_AUTHENTICATION: plain
-  SMTP_STARTTLS_AUTO: true
-  MAILER_SENDER: CSP Hero <no-reply@csphero.example.com>
+  SMTP_ADDRESS: ${SMTP_ADDRESS:-}
+  SMTP_PORT: ${SMTP_PORT:-587}
+  SMTP_DOMAIN: ${SMTP_DOMAIN:-}
+  SMTP_USERNAME: ${SMTP_USERNAME:-}
+  SMTP_PASSWORD: ${SMTP_PASSWORD:-}
+  SMTP_AUTHENTICATION: ${SMTP_AUTHENTICATION:-plain}
+  SMTP_STARTTLS_AUTO: ${SMTP_STARTTLS_AUTO:-true}
+  MAILER_SENDER: ${MAILER_SENDER:-CSP Hero <no-reply@example.com>}
+
+# Built once, reused by web/worker/migrate so we don't rebuild the image
+# three times for the same code.
+x-app-build: &app-build
+  context: .
+  args:
+    VITE_AUTH0_DOMAIN: ${VITE_AUTH0_DOMAIN}
+    VITE_AUTH0_CLIENT_ID: ${VITE_AUTH0_CLIENT_ID}
+    VITE_AUTH0_AUDIENCE: ${VITE_AUTH0_AUDIENCE}
 
 services:
   # One-shot migration step. Runs db:prepare exactly once per `up`/deploy, then
@@ -36,7 +46,8 @@ services:
   # so multiple app pods never race to migrate the same database. In Kubernetes
   # this maps to an init container or a pre-deploy Job.
   migrate:
-    image: "hiquest/csphero:latest"
+    build: *app-build
+    image: csphero:local
     command: ["./bin/rails", "db:prepare"]
     environment:
       <<: *app-env
@@ -45,11 +56,12 @@ services:
     restart: on-failure
 
   web:
-    image: "hiquest/csphero:latest"
+    build: *app-build
+    image: csphero:local
     environment:
       <<: *app-env
     ports:
-      - "80:80"
+      - "${WEB_PORT:-8080}:80"
     depends_on:
       db:
         condition: service_started
@@ -62,7 +74,8 @@ services:
   # `docker compose up --scale worker=N` and tune threads/processes per worker
   # via JOB_CONCURRENCY (see config/queue.yml).
   worker:
-    image: "hiquest/csphero:latest"
+    build: *app-build
+    image: csphero:local
     command: ["./bin/jobs"]
     environment:
       <<: *app-env
@@ -76,9 +89,9 @@ services:
   db:
     image: postgres:15
     environment:
-      - POSTGRES_DB=csphero_production
-      - POSTGRES_USER=myusername
-      - POSTGRES_PASSWORD=replace_with_your_password
+      - POSTGRES_DB=${DB_NAME:-csphero_production}
+      - POSTGRES_USER=${DB_USERNAME:-csphero}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
     volumes:
       - db_data:/var/lib/postgresql/data
     restart: unless-stopped
